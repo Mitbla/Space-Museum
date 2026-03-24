@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planetariam Museum Virtual Tour</title>
+  <style>
+    body, html { margin: 0; padding: 0; overflow: hidden; }
+    #info { position: absolute; top: 10px; left: 10px; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; z-index: 10; font-family: sans-serif; }
+    .home-btn { position: absolute; top: 10px; right: 10px; color: #fff; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); padding: 10px 20px; border-radius: 30px; z-index: 10; text-decoration: none; font-family: sans-serif; font-weight: bold; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+    .home-btn:hover { background: rgba(255, 255, 255, 0.2); border-color: #fff; }
+  </style>
+</head>
+<body>
+  <div id="info">WASD move • Click to lock mouse • Move mouse to look</div>
+  <a href="../index.html" class="home-btn">&larr; Home</a>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

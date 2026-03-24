@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artifact Details - Space Museum</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="artifact-page">
+
+    <div class="grid-container">
+
+        <!-- Header -->
+        <header class="header-section flex-header">
+            <a href="index.html" class="back-link">&lt; RETURN TO ARCHIVE</a>
+            <div class="header-content-right">
+                <nav class="global-nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-link">HOME</a></li>
+                        <li><a href="about.html" class="nav-link">ABOUT US</a></li>
+                        <li><a href="Planetariam Museum/index.html" class="nav-link">VIRTUAL SPACE MUSEUM</a></li>
+                    </ul>
+                </nav>
+                <div class="logo-container">
+                    <img src="museum-logo-v3.jpg" alt="Online Space Museum Logo" class="museum-logo">
+                </div>
+                <div class="header-text-right">
+                    <h1 class="museum-title" id="pageTitle">ARTIFACT PROFILE</h1>
+                    <p class="subtitle" id="pageSubtitle">CLASSIFIED CELESTIAL BODY</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Display -->
+        <section class="main-artifact-display">
+            <div class="large-image-wrapper">
+                <img id="detailHeroImage" src="" alt="Artifact">
+            </div>
+        </section>
+
+        <!-- Information Cards Grid -->
+        <section class="details-grid">
+            
+            <article class="info-card detail-card">
+                <div class="detail-card-content">
+                    <h2 class="detail-title">Basic Information</h2>
+                    <p class="detail-text" id="detailBasicInfo">Loading basic information...</p>
+                </div>
+            </article>
+
+            <article class="info-card detail-card warning-card">
+                <div class="detail-card-content">
+                    <h2 class="detail-title">Environmental Dangers</h2>
+                    <p class="detail-text" id="detailDangers">Loading danger profile...</p>
+                </div>
+            </article>
+
+            <article class="info-card detail-card habitability-card">
+                <div class="detail-card-content">
+                    <h2 class="detail-title">Habitability Analysis</h2>
+                    <p class="detail-text" id="detailHabitability">Loading habitability report...</p>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Gallery / Alternate Angles -->
+        <section class="gallery-section">
+            <h2 class="gallery-title">ARCHIVAL FOOTAGE</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img id="galleryImg1" src="" alt="Alternate Angle 1">
+                </div>
+                <div class="gallery-item">
+                    <img id="galleryImg2" src="" alt="Alternate Angle 2">
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Space Museum</title>
+    
+    <!-- Google Fonts: Bebas Neue for headers, Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Spacecraft Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="grid-container">
+
+        <!-- Header / Museum Title -->
+        <header class="header-section">
+            <div class="logo-container">
+                <img src="museum-logo-v3.jpg" alt="Online Space Museum Logo" class="museum-logo">
+            </div>
+            <div class="header-text">
+                <h1 class="museum-title">MUSEUM OF OUR UNIVERSE</h1>
+                <p class="subtitle">EXPLORE THE ARCHIVE OF CELESTIAL BODIES</p>
+            </div>
+            <nav class="global-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active">HOME</a></li>
+                    <li><a href="about.html" class="nav-link">ABOUT US</a></li>
+                    <li><a href="Planetariam Museum/index.html" class="nav-link">VIRTUAL SPACE MUSEUM</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Timeline / Artifact Selector -->
+        <section class="timeline-section">
+            <h2 class="timeline-title">THE SOLAR ARTIFACTS<br>OVER THE AEONS</h2>
+            
+            <div class="timeline-nav">
+                <div class="timeline-items" id="timelineList">
+                    <span class="timeline-item active" data-planet="sun">SUN</span>
+                    <span class="timeline-item" data-planet="mercury">MERCURY</span>
+                    <span class="timeline-item" data-planet="venus">VENUS</span>
+                    <span class="timeline-item" data-planet="earth">EARTH</span>
+                    <span class="timeline-item" data-planet="mars">MARS</span>
+                    <span class="timeline-item" data-planet="jupiter">JUPITER</span>
+                    <span class="timeline-item" data-planet="saturn">SATURN</span>
+                    <span class="timeline-item" data-planet="uranus">URANUS</span>
+                    <span class="timeline-item" data-planet="neptune">NEPTUNE</span>
+                </div>
+            </div>
+
+            <div class="active-artifact-display">
+                <h1 class="active-planet-title" id="planetTitle">SUN</h1>
+                <p class="artifact-description" id="planetDescription">
+                    The star at the center of the Solar System. It is a nearly perfect ball of hot plasma, heated to incandescence by nuclear fusion reactions in its core. The Sun radiates energy mainly as visible light, ultraviolet light, and infrared radiation, and is the most important source of energy for life on Earth.
+                </p>
+                <a href="artifact.html?id=sun" class="view-link" id="exploreBtn">Explore Artifact ↗</a>
+            </div>
+            
+            <div class="artifact-visual">
+                <div class="visual-header">
+                </div>
+                <!-- Image goes here -->
+                <div class="image-wrapper">
+                    <img id="planetImage" src="" alt="Earth from Space">
+                </div>
+            </div>
+        </section>
+
+        <!-- Spacecraft Instruments Divider (Long Thin Body) -->
+        <section class="timeline-section craft-divider">
+            <div class="craft-icons">
+                <div class="craft-icon-wrap" title="Orbiting Satellites" data-craft="satellite">
+                    <i class="fa-solid fa-satellite"></i>
+                    <span class="craft-title">SATELLITES</span>
+                </div>
+                <div class="craft-icon-wrap" title="Deep Space Probes" data-craft="probe">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                    <span class="craft-title">PROBES</span>
+                </div>
+                <div class="craft-icon-wrap" title="Automated Rovers" data-craft="rover">
+                    <i class="fa-solid fa-robot"></i>
+                    <span class="craft-title">ROVERS</span>
+                </div>
+                <div class="craft-icon-wrap" title="Launch Vehicles" data-craft="rocket">
+                    <i class="fa-solid fa-rocket"></i>
+                    <span class="craft-title">ROCKETS</span>
+                </div>
+            </div>
+        </section> <!-- End craft-divider -->
+
+        <!-- Virtual Space Museum Button -->
+        <div class="virtual-museum-btn-wrap">
+            <a href="Planetariam Museum/index.html" class="virtual-museum-btn">VISIT OUR VIRTUAL SPACE MUSEUM</a>
+        </div>
+
+        <!-- Latest Discoveries Section -->
+        <section class="timeline-section discovery-section">
+            <h2 class="timeline-title">LATEST NASA DISCOVERIES</h2>
+            
+            <div class="timeline-nav">
+                <div class="timeline-items" id="discoveryList">
+                    <span class="timeline-item discovery-item active" data-discovery="webb">JAMES WEBB</span>
+                    <span class="timeline-item discovery-item" data-discovery="perseverance">PERSEVERANCE</span>
+                    <span class="timeline-item discovery-item" data-discovery="exoplanet">EXOPLANET K2-18B</span>
+                </div>
+            </div>
+
+            <div class="active-artifact-display">
+                <h1 class="active-planet-title" id="discoveryTitle">JAMES WEBB</h1>
+                
+                <p class="artifact-description" id="discoveryDescription">
+                    The James Webb Space Telescope (JWST) is the largest, most powerful, and most complex space science telescope ever built. It views the universe in the infrared, peering through dust clouds to see the formation of stars and planetary systems.
+                </p>
+                <a href="https://webb.nasa.gov/" target="_blank" class="view-link" id="discoveryLink">View NASA Discovery ↗</a>
+            </div>
+            
+            <div class="artifact-visual" style="border: none;">
+                <!-- Image goes here -->
+                <div class="image-wrapper" style="height: 400px; border-radius: 12px;">
+                    <div id="discoveryImagePlaceholder" style="width: 100%; height: 100%; background: linear-gradient(45deg, #1a0b2e, #0e1e2e);"></div>
+                    <img id="discoveryImage" src="" alt="Latest Discovery" style="display: none; border-radius: 12px;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Informational Cards (Right Side based on reference) -->
+        <section class="info-section">
+            
+            <article class="info-card">
+                <div class="card-content">
+                    <h3 class="card-title">One Museum, Infinite Wonders</h3>
+                    <p class="card-text">
+                        The Online Space Museum, located in the digital ether, is a curated collection of planetary bodies and celestial phenomena. It houses detailed records and high-resolution captures of the most awe-inspiring artifacts in our solar system and beyond.
+                    </p>
+                </div>
+                <div class="card-image-wrap">
+                    <!-- Secondary image or related content -->
+                    <img src="mars_premium_1773688810242.png" alt="Museum Interior Concept" class="card-img" id="secondaryImg">
+                </div>
+            </article>
+
+            <article class="info-card curator-card">
+                 <div class="curator-info">
+                     <h3 class="curator-name">Dr. M. Explorer</h3>
+                     <p class="curator-role">
+                         Dr. Explorer is the Chief Curator of Planetary Artifacts and a supervisory astronomer in the Astrophysics Department. 
+                     </p>
+                     <p class="curator-bio">
+                         They are responsible for the curation of the "Milestones of the Solar System" hall and served as the co-lead curator for that exhibit's latest digital iteration.
+                     </p>
+                 </div>
+                 <div class="curator-image-wrap">
+                     <div class="curator-placeholder"></div>
+                 </div>
+            </article>
+
+            <!-- Accordion / Sidebar menu -->
+            <aside class="sidebar-menu">
+                <div class="menu-item">
+                    <button class="accordion-btn">Our Research <span>+</span></button>
+                    <div class="accordion-content">
+                        <p>Ongoing studies into planetary formation, atmospheric dynamics, and the search for extraterrestrial life indicators.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <button class="accordion-btn">Organization <span>+</span></button>
+                    <div class="accordion-content" style="display: none;">
+                        <p>Information about the structure and funding of the museum.</p>
+                    </div>
+                </div>
+                <div class="menu-item active">
+                    <button class="accordion-btn">Facts and Figures <span>-</span></button>
+                    <div class="accordion-content">
+                        <p class="small-text">
+                            The museum's collection contains over 2 million digital replicas, representing the entire span of human astronomical observation. 
+                        </p>
+                        <p class="small-text mt">
+                            Every artifact is meticulously verified against multiple independent data sources from space agencies worldwide to ensure accuracy and fidelity.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </section>
+
+    </div>
+
+    <!-- Spacecraft Info Modal -->
+    <div class="modal-overlay" id="craftModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="modal-header">
+                <i class="fa-solid fa-satellite" id="modalIcon"></i>
+                <h2 class="modal-title" id="modalTitle">SPACE CRAFT</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-text" id="modalDescription">Description goes here...</p>
+                <div class="modal-stats">
+                    <div class="stat-box">
+                        <span class="stat-label" id="modalStatLabel1">Active Missions</span>
+                        <span class="stat-value" id="modalStat1">--</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label" id="modalStatLabel2">Notable Example</span>
+                        <span class="stat-value" id="modalStat2">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rocket Transition Overlay -->
+    <div id="rocket-transition" class="rocket-transition hidden">
+        <div class="rocket-container">
+            <div class="rocket-body">
+                <div class="rocket-nose"></div>
+                <div class="rocket-window"></div>
+                <div class="rocket-fin left"></div>
+                <div class="rocket-fin right"></div>
+                <div class="rocket-exhaust"></div>
+            </div>
+        </div>
+        <div class="smoke-container">
+            <div class="smoke-cloud s1"></div>
+            <div class="smoke-cloud s2"></div>
+            <div class="smoke-cloud s3"></div>
+            <div class="smoke-cloud s4"></div>
+            <div class="smoke-cloud s5"></div>
+            <div class="smoke-cloud s6"></div>
+            <div class="smoke-cloud s7"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

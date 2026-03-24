@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Space Museum</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="grid-container">
+
+        <!-- Header / Museum Title -->
+        <header class="header-section">
+            <div class="logo-container">
+                <img src="museum-logo-v3.jpg" alt="Online Space Museum Logo" class="museum-logo">
+            </div>
+            <div class="header-text">
+                <h1 class="museum-title">ABOUT THE MUSEUM</h1>
+                <p class="subtitle">OUR MISSION AND VISION</p>
+            </div>
+            <nav class="global-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">HOME</a></li>
+                    <li><a href="about.html" class="nav-link active">ABOUT US</a></li>
+                    <li><a href="Planetariam Museum/index.html" class="nav-link">VIRTUAL SPACE MUSEUM</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <section class="timeline-section" style="grid-column: 1 / -1;">
+            <h2 class="timeline-title">ARCHIVING THE COSMOS</h2>
+            <div style="display: flex; flex-direction: column; gap: 2rem; max-width: 800px;">
+                <p class="artifact-description" style="max-width: 100%; font-size: 1.1rem; line-height: 1.8;">
+                    The Museum of Our Universe was founded on a singular principle: to digitize, archive, and immortalize the celestial artifacts that orbit our star. Born from a collaboration of independent astrophysics researchers and digital preservationists, our institution bypasses traditional physical limitations to deliver a universally accessible repository of knowledge.
+                </p>
+                <p class="artifact-description" style="max-width: 100%; font-size: 1.1rem; line-height: 1.8;">
+                    Our platform utilizes an integrated "AI DOM Scanner"—a proprietary technology that constantly polls and cross-references thousands of deep-space telemetry channels and historical databases. This ensures that the digital models and statistics presented in our archives are not merely static images, but living, vetted records of our solar system's evolution.
+                </p>
+            </div>
+        </section>
+
+        <!-- Informational Cards -->
+        <section class="info-section">
+            <article class="info-card curator-card">
+                 <div class="curator-info">
+                     <h3 class="curator-name">Dr. M. Explorer</h3>
+                     <p class="curator-role">CHIEF CURATOR & SUPERVISORY ASTRONOMER</p>
+                     <p class="curator-bio">
+                         Dr. Explorer serves as the primary architect of the "Milestones of the Solar System" digital hall. With a background spanning over a decade in orbital mechanics and exoplanetary archiving, they spearheaded the initiative to transition physical observatory data into this immersive, globally accessible framework.
+                     </p>
+                 </div>
+                 <div class="curator-image-wrap">
+                     <div class="curator-placeholder" style="background-image: url('mars_premium_1773688810242.png');"></div>
+                 </div>
+            </article>
+
+            <article class="info-card">
+                <div class="card-content">
+                    <h3 class="card-title">Technological Immersion</h3>
+                    <p class="card-text">
+                        The interface you are currently experiencing is wrapped in a dynamic frosted-glass overlay powered by CSS Backdrop Filters, layered over real-time simulated celestial backgrounds. This dark-themed aesthetic isn't just a design choice—it simulates the stark, beautiful void of deep space viewing conditions required for optimal artifact analysis.
+                    </p>
+                </div>
+                <div class="card-image-wrap">
+                    <img id="detailHeroImage" src="earth_premium_1773688795438.png" alt="Artifact" style="width:100%; height:100%; object-fit: cover; filter: brightness(0.7) contrast(1.2);">
+                </div>
+            </article>
+        </section>
+
+    </div>
+
+    <!-- The same dynamic background script applies here -->
+    <script src="script.js"></script>
+</body>
+</html>
