@@ -50,6 +50,17 @@ You must run it through a local development server.
 - **Three.js:** WebGL 3D rendering engine driving the Planetarium Museum.
 - **FontAwesome:** Scalable vector iconography for spacecraft and UI elements.
 
+## 🧠 Agentic Orchestration
+
+This project was developed utilizing an **Agentic Orchestration process**. Through this workflow, AI development is strictly constrained by durational artifacts, sprint logs, and specific design boundaries rather than relying on endless chat memory. 
+
+During the development cycle, the AI acted strictly as a **Smithsonian Curator**—evaluating the narrative flow, artifact presentation, and overall visitor experience of the digital exhibition.
+
+The strict directives governing this project are:
+- **Swiss Style:** Utilizing a high-contrast, grid-based layout with bold sans-serif typography to ensure complex scientific data remains highly accessible and organized.
+- **The Sage Archetype:** The museum’s persona assumes the role of a prestigious, world-class researcher strictly dedicated to facts and the preservation of celestial truth.
+- **Authority Principle:** Leveraging Cialdini's Principle of Authority by integrating verified NASA Discoveries and anchoring the narrative on the expert character 'Dr. M. Explorer'.
+
 ## 📁 Project Structure
 
 ```text
