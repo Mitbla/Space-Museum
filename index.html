@@ -14,39 +14,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Model Viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </head>
 <body>
 
     <div class="grid-container">
 
-        <!-- Header / Museum Title -->
-        <header class="header-section">
-            <div class="logo-container">
-                <img src="museum-logo-v3.jpg" alt="Online Space Museum Logo" class="museum-logo">
-            </div>
-            <div class="header-text">
-                <h1 class="museum-title">MUSEUM OF OUR UNIVERSE</h1>
-                <p class="subtitle">EXPLORE THE ARCHIVE OF CELESTIAL BODIES</p>
-            </div>
-            <nav class="global-nav">
-                <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link active">HOME</a></li>
-                    <li><a href="about.html" class="nav-link">ABOUT US</a></li>
-                    <li><a href="Planetariam Museum/index.html" class="nav-link">VIRTUAL SPACE MUSEUM</a></li>
-                </ul>
-            </nav>
-        </header>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <!-- Header Navigation -->
+            <header class="hero-header">
+                <div class="logo-container">
+                    <img src="museum-logo-transparent.jpg" alt="Online Space Museum Logo" class="hero-logo">
+                    <span class="hero-museum-title">MUSEUM OF OUR SOLAR SYSTEM</span>
+                </div>
+                <nav class="hero-nav">
+                    <ul class="hero-nav-list">
+                        <li><a href="index.html" class="hero-nav-link active">Home</a></li>
+                        <li><a href="about.html" class="hero-nav-link">About Us</a></li>
+                        <li><a href="Planetariam Museum/index.html" class="hero-nav-link">Virtual Space Museum</a></li>
+                    </ul>
+                </nav>
+            </header>
 
-        <!-- Welcome Introduction -->
-        <section class="welcome-section timeline-section" style="grid-column: 1 / -1; margin-bottom: 1rem; padding: 2.5rem; text-align: center;">
-            <h2 class="timeline-title" style="margin-bottom: 1rem; text-align: center; color: var(--blue-glow);">WELCOME TO THE ARCHIVE</h2>
-            <p class="artifact-description" style="max-width: 900px; margin: 0 auto; line-height: 1.8; color: var(--text-muted); font-size: 1.25rem;">
-                Embark on an immersive journey across the cosmos. The Museum of Our Universe offers a dual experience: explore the interactive terminal below to uncover the deeply curated lore and latest NASA imaging of our Solar System, or select "Virtual Space Museum" to launch into our fully walkable, 8-story 3D Planetarium environment.
-            </p>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Explore the<br>Vast Wonders<br>of Our <span class="highlight-text">Solar System <svg class="orbit-svg" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="20" rx="45" ry="15" fill="none" stroke="#d4af37" stroke-width="2" transform="rotate(-15 50 20)"/><circle cx="85" cy="5" r="3" fill="#d4af37"/></svg></span></h1>
+                    <p class="hero-description">Embark on an extraordinary journey of discovery and imagination as you explore the vast wonders of our solar system and beyond. Engage with our interactive artifact archive below, or completely immerse yourself in the Virtual Museum Tour.</p>
+                    <div class="hero-buttons">
+                        <button class="hero-cta" id="startExploringBtn">Start Exploring</button>
+                        <a href="Planetariam Museum/index.html" class="hero-cta secondary-cta">Virtual Museum Tour</a>
+                    </div>
+
+
+                </div>
+
+                <div class="hero-graphics">
+                    <img src="astronaut.png" alt="Astronaut" class="astronaut-img">
+                    
+
+                </div>
+            </div>
         </section>
-
+        
         <!-- Main Timeline / Artifact Selector -->
-        <section class="timeline-section">
+        <section class="timeline-section" id="explore" style="scroll-margin-top: 1rem;">
             <h2 class="timeline-title">THE SOLAR ARTIFACTS<br>OVER THE AEONS</h2>
             
             <div class="timeline-nav">
@@ -63,20 +77,23 @@
                 </div>
             </div>
 
-            <div class="active-artifact-display">
-                <h1 class="active-planet-title" id="planetTitle">SUN</h1>
-                <p class="artifact-description" id="planetDescription">
-                    The star at the center of the Solar System. It is a nearly perfect ball of hot plasma, heated to incandescence by nuclear fusion reactions in its core. The Sun radiates energy mainly as visible light, ultraviolet light, and infrared radiation, and is the most important source of energy for life on Earth.
-                </p>
-                <a href="artifact.html?id=sun" class="view-link" id="exploreBtn">Explore Artifact ↗</a>
-            </div>
-            
-            <div class="artifact-visual">
-                <div class="visual-header">
+            <div class="timeline-content-split">
+                <div class="active-artifact-display">
+                    <h1 class="active-planet-title" id="planetTitle">SUN</h1>
+                    <p class="artifact-description" id="planetDescription">
+                        The star at the center of the Solar System. It is a nearly perfect ball of hot plasma, heated to incandescence by nuclear fusion reactions in its core. The Sun radiates energy mainly as visible light, ultraviolet light, and infrared radiation, and is the most important source of energy for life on Earth.
+                    </p>
+                    <a href="artifact.html?id=sun" class="hero-cta" id="exploreBtn" style="display: inline-block; width: fit-content; margin-top: 1rem;">Explore Artifact</a>
                 </div>
-                <!-- Image goes here -->
-                <div class="image-wrapper">
-                    <img id="planetImage" src="" alt="Earth from Space">
+                
+                <div class="artifact-visual">
+                    <div class="visual-header">
+                    </div>
+                    <!-- Image or Model goes here -->
+                    <div class="image-wrapper" style="position: relative;">
+                        <img id="planetImage" src="" alt="Planet">
+                        <model-viewer id="planetModel" src="" alt="3D Model" auto-rotate auto-rotate-delay="0" environment-image="neutral" style="width: 100%; height: 100%; display: none; background-color: transparent; transform: scale(1.15) translateY(-10%); pointer-events: none;"></model-viewer>
+                    </div>
                 </div>
             </div>
         </section>
@@ -103,11 +120,6 @@
             </div>
         </section> <!-- End craft-divider -->
 
-        <!-- Virtual Space Museum Button -->
-        <div class="virtual-museum-btn-wrap">
-            <a href="Planetariam Museum/index.html" class="virtual-museum-btn">VISIT OUR VIRTUAL SPACE MUSEUM</a>
-        </div>
-
         <!-- Latest Discoveries Section -->
         <section class="timeline-section discovery-section">
             <h2 class="timeline-title">LATEST NASA DISCOVERIES</h2>
@@ -120,20 +132,22 @@
                 </div>
             </div>
 
-            <div class="active-artifact-display">
-                <h1 class="active-planet-title" id="discoveryTitle">OSIRIS-REX</h1>
+            <div class="timeline-content-split">
+                <div class="active-artifact-display">
+                    <h1 class="active-planet-title" id="discoveryTitle">OSIRIS-REX</h1>
+                    
+                    <p class="artifact-description" id="discoveryDescription">
+                        NASA's OSIRIS-REx mission successfully returned a capsule to Earth containing pristine material gathered from the near-Earth asteroid Bennu. Initial analysis of the 4.5-billion-year-old sample reveals high carbon content and water, shedding light on the origins of life and our solar system.
+                    </p>
+                    <a href="https://science.nasa.gov/mission/osiris-rex/" target="_blank" class="hero-cta" id="discoveryLink" style="display: inline-block; width: fit-content; margin-top: 1rem;">View NASA Discovery ↗</a>
+                </div>
                 
-                <p class="artifact-description" id="discoveryDescription">
-                    NASA's OSIRIS-REx mission successfully returned a capsule to Earth containing pristine material gathered from the near-Earth asteroid Bennu. Initial analysis of the 4.5-billion-year-old sample reveals high carbon content and water, shedding light on the origins of life and our solar system.
-                </p>
-                <a href="https://science.nasa.gov/mission/osiris-rex/" target="_blank" class="view-link" id="discoveryLink">View NASA Discovery ↗</a>
-            </div>
-            
-            <div class="artifact-visual" style="border: none;">
-                <!-- Image goes here -->
-                <div class="image-wrapper" style="height: 400px; border-radius: 12px;">
-                    <div id="discoveryImagePlaceholder" style="width: 100%; height: 100%; background: linear-gradient(45deg, #1a0b2e, #0e1e2e);"></div>
-                    <img id="discoveryImage" src="" alt="Latest Discovery" style="display: none; border-radius: 12px;">
+                <div class="artifact-visual" style="border: none;">
+                    <!-- Image goes here -->
+                    <div class="image-wrapper" style="height: 400px; border-radius: 12px;">
+                        <div id="discoveryImagePlaceholder" style="width: 100%; height: 100%; background: linear-gradient(45deg, #1a0b2e, #0e1e2e);"></div>
+                        <img id="discoveryImage" src="" alt="Latest Discovery" style="display: none; border-radius: 12px;">
+                    </div>
                 </div>
             </div>
         </section>
@@ -199,6 +213,49 @@
         </section>
 
     </div>
+
+    <!-- Museum Footer -->
+    <footer class="museum-footer">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="museum-logo-transparent.jpg" alt="Museum Logo" class="footer-logo">
+                <h3 class="footer-museum-name">Museum of Our Solar System</h3>
+                <p class="footer-tagline">Curating the cosmos, one artifact at a time. A digital institution dedicated to preserving and presenting the wonders of our solar system through verified scientific data and immersive experiences.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Navigate</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="artifact.html?id=sun">Solar Artifacts</a></li>
+                    <li><a href="Planetariam Museum/index.html">Virtual Museum Tour</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="artifact.html?id=mercury">Mercury</a></li>
+                    <li><a href="artifact.html?id=venus">Venus</a></li>
+                    <li><a href="artifact.html?id=earth">Earth</a></li>
+                    <li><a href="artifact.html?id=mars">Mars</a></li>
+                    <li><a href="artifact.html?id=jupiter">Jupiter</a></li>
+                    <li><a href="artifact.html?id=saturn">Saturn</a></li>
+                    <li><a href="artifact.html?id=uranus">Uranus</a></li>
+                    <li><a href="artifact.html?id=neptune">Neptune</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Curated By</h4>
+                <p class="footer-curator-text">Dr. M. Explorer</p>
+                <p class="footer-curator-role">Chief Curator & Supervisory Astronomer</p>
+                <p class="footer-tagline" style="margin-top: 1rem;">All planetary data is cross-referenced against primary NASA archival databases.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Museum of Our Solar System. All rights reserved.</p>
+            <p class="footer-credit">Built with passion for the cosmos.</p>
+        </div>
+    </footer>
 
     <!-- Spacecraft Info Modal -->
     <div class="modal-overlay" id="craftModal">

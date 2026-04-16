@@ -1,12 +1,21 @@
 // Virtual Planetarium Museum - stable vanilla Three.js setup
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   const infoEl = document.getElementById('info');
 
   if (!window.THREE) {
     infoEl.textContent = 'Three.js failed to load. Check internet connection and reload.';
     return;
   }
+
+  const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
+  const gltfLoader = new GLTFLoader();
+
+  const textureLoader = new THREE.TextureLoader();
+
+  const mercuryPic = new Image();
+  mercuryPic.src = '../mercury_premium_1773689140406.png';
+  await new Promise(res => { mercuryPic.onload = res; mercuryPic.onerror = res; });
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x89b9ee);
@@ -798,7 +807,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  function createMercuryBoardTexture(variantIndex, title, dangerous) {
+  function createBoardTexture(variantIndex, title, dangerous, planetName, loadedImg) {
     const c = document.createElement('canvas');
     c.width = 700;
     c.height = 420;
@@ -821,38 +830,54 @@ window.addEventListener('DOMContentLoaded', () => {
     const mx = 160;
     const my = 210;
     const mr = 92;
-    const grad = ctx.createRadialGradient(mx - 18, my - 20, 8, mx, my, mr + 6);
-    grad.addColorStop(0, dangerous ? '#f6ba82' : '#d6b28b');
-    grad.addColorStop(1, dangerous ? '#8d5539' : '#786351');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(mx, my, mr, 0, Math.PI * 2);
-    ctx.fill();
 
-    // Mercury variants (different looks)
-    const craterSets = [
-      [
-        [120, 170, 16], [175, 185, 14], [145, 235, 11], [205, 250, 9], [98, 225, 10], [186, 135, 8],
-      ],
-      [
-        [115, 150, 13], [145, 178, 17], [183, 210, 12], [132, 248, 14], [197, 158, 10], [92, 206, 8],
-      ],
-      [
-        [100, 188, 15], [128, 148, 9], [166, 170, 16], [198, 224, 13], [139, 266, 11], [214, 188, 7],
-      ],
-      [
-        [106, 162, 14], [150, 194, 10], [178, 236, 15], [125, 224, 12], [198, 162, 9], [92, 246, 8],
-      ],
-      [
-        [112, 180, 12], [165, 152, 13], [192, 196, 16], [139, 214, 9], [173, 254, 11], [96, 214, 7],
-      ],
-    ];
-    const selected = craterSets[variantIndex % craterSets.length];
-    ctx.fillStyle = dangerous ? 'rgba(52,18,10,0.42)' : 'rgba(30,28,26,0.35)';
-    for (const crater of selected) {
+    if (loadedImg && loadedImg.complete && loadedImg.naturalHeight > 0 && planetName === 'Mercury') {
+      ctx.save();
       ctx.beginPath();
-      ctx.arc(crater[0], crater[1], crater[2], 0, Math.PI * 2);
+      ctx.arc(mx, my, mr, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.drawImage(loadedImg, mx - mr, my - mr, mr*2, mr*2);
+      ctx.restore();
+
+      ctx.strokeStyle = dangerous ? '#f6ba82' : '#d6b28b';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(mx, my, mr, 0, Math.PI * 2);
+      ctx.stroke();
+    } else {
+      const grad = ctx.createRadialGradient(mx - 18, my - 20, 8, mx, my, mr + 6);
+      grad.addColorStop(0, dangerous ? '#f6ba82' : '#d6b28b');
+      grad.addColorStop(1, dangerous ? '#8d5539' : '#786351');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(mx, my, mr, 0, Math.PI * 2);
       ctx.fill();
+
+      // Mercury variants (different looks)
+      const craterSets = [
+        [
+          [120, 170, 16], [175, 185, 14], [145, 235, 11], [205, 250, 9], [98, 225, 10], [186, 135, 8],
+        ],
+        [
+          [115, 150, 13], [145, 178, 17], [183, 210, 12], [132, 248, 14], [197, 158, 10], [92, 206, 8],
+        ],
+        [
+          [100, 188, 15], [128, 148, 9], [166, 170, 16], [198, 224, 13], [139, 266, 11], [214, 188, 7],
+        ],
+        [
+          [106, 162, 14], [150, 194, 10], [178, 236, 15], [125, 224, 12], [198, 162, 9], [92, 246, 8],
+        ],
+        [
+          [112, 180, 12], [165, 152, 13], [192, 196, 16], [139, 214, 9], [173, 254, 11], [96, 214, 7],
+        ],
+      ];
+      const selected = craterSets[variantIndex % craterSets.length];
+      ctx.fillStyle = dangerous ? 'rgba(52,18,10,0.42)' : 'rgba(30,28,26,0.35)';
+      for (const crater of selected) {
+        ctx.beginPath();
+        ctx.arc(crater[0], crater[1], crater[2], 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
     ctx.strokeStyle = dangerous ? 'rgba(255,124,96,0.85)' : 'rgba(170,196,255,0.75)';
@@ -861,7 +886,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     ctx.fillStyle = dangerous ? '#ffd4c6' : '#e0ebff';
     ctx.font = '700 34px Arial';
-    ctx.fillText('MERCURY', 295, 178);
+    ctx.fillText(planetName.toUpperCase(), 295, 178);
     ctx.font = '600 22px Arial';
     ctx.fillStyle = dangerous ? '#ff9a7f' : '#9fc0ff';
     ctx.fillText(title, 295, 214);
@@ -935,37 +960,52 @@ window.addEventListener('DOMContentLoaded', () => {
     podium.position.set(displayX, fy + 0.4, displayZ);
     scene.add(podium);
 
-    const planetMesh = new THREE.Mesh(
-      new THREE.SphereGeometry(planet.radius, 28, 28),
-      new THREE.MeshStandardMaterial({ color: planet.color, roughness: 0.85, metalness: 0.05 })
-    );
-    planetMesh.position.set(displayX, fy + 1.05 + planet.radius, displayZ);
-    scene.add(planetMesh);
+    if (planet.name === 'Mercury') {
+      const mercuryGroup = new THREE.Group();
+      mercuryGroup.position.set(displayX, fy + 1.05 + planet.radius, displayZ);
+      scene.add(mercuryGroup);
+      planetExhibits.push({ mesh: mercuryGroup, baseY: mercuryGroup.position.y, speed: 0.22 });
 
-    if (planet.name === 'Saturn') {
-      const ring = new THREE.Mesh(
-        new THREE.RingGeometry(planet.radius * 1.35, planet.radius * 1.95, 48),
-        new THREE.MeshStandardMaterial({
-          color: 0xcfc6a6,
-          roughness: 0.7,
-          metalness: 0.02,
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 0.75,
-        })
+      gltfLoader.load('../Mercury.glb', (gltf) => {
+        const model = gltf.scene;
+        model.scale.setScalar(0.42);
+        mercuryGroup.add(model);
+      });
+    } else {
+      const planetMesh = new THREE.Mesh(
+        new THREE.SphereGeometry(planet.radius, 28, 28),
+        new THREE.MeshStandardMaterial({ color: planet.color, roughness: 0.85, metalness: 0.05 })
       );
-      ring.rotation.x = Math.PI / 2.7;
-      ring.position.copy(planetMesh.position);
-      scene.add(ring);
-      planetExhibits.push({ mesh: ring, baseY: ring.position.y, speed: 0.16 });
-    }
+      planetMesh.position.set(displayX, fy + 1.05 + planet.radius, displayZ);
+      scene.add(planetMesh);
 
-    planetExhibits.push({ mesh: planetMesh, baseY: planetMesh.position.y, speed: 0.22 });
+      if (planet.name === 'Saturn') {
+        const ring = new THREE.Mesh(
+          new THREE.RingGeometry(planet.radius * 1.35, planet.radius * 1.95, 48),
+          new THREE.MeshStandardMaterial({
+            color: 0xcfc6a6,
+            roughness: 0.7,
+            metalness: 0.02,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.75,
+          })
+        );
+        ring.rotation.x = Math.PI / 2.7;
+        ring.position.copy(planetMesh.position);
+        scene.add(ring);
+        planetExhibits.push({ mesh: ring, baseY: ring.position.y, speed: 0.16 });
+      }
+
+      planetExhibits.push({ mesh: planetMesh, baseY: planetMesh.position.y, speed: 0.22 });
+    }
 
     // Generate the 5 detailed info cards on EVERY floor, using the correct planet data
     const activeLoreCards = planetLoreCards[planet.name];
     if (activeLoreCards) {
-      const boardZ = museumBounds.maxZ - 0.36;
+      const rawBoardZ = museumBounds.maxZ - 0.36;
+      // Pull floor 2 boards back by 3.2 so they sit solidly on the balcony floor.
+      const boardZ = floorNumber === 2 ? rawBoardZ - 3.2 : rawBoardZ;
       const boardStepX = 2.0;
       const boardCenterX = 2.5;
       const boardStartX = boardCenterX - ((activeLoreCards.length - 1) * boardStepX) / 2;
@@ -994,7 +1034,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const boardFace = new THREE.Mesh(
           new THREE.PlaneGeometry(1.58, 1.08),
           new THREE.MeshStandardMaterial({
-            map: createMercuryBoardTexture(i, cardData.title, cardData.dangerous), // We can reuse the texture generator function
+            map: createBoardTexture(i, cardData.title, cardData.dangerous, planet.name, mercuryPic), // We can reuse the texture generator function
             roughness: 0.78,
             metalness: 0.05,
           })
@@ -1037,6 +1077,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Keep the extra image gallery only on the first floor
     if (floorNumber === 1 && planet.name === 'Mercury') {
       const galleryStartX = -1.4;
+      const mercuryImages = ['../mercury_surface_1773690721650.png', '../mercury_angle_1773690735151.png'];
       for (let g = 0; g < 2; g++) {
         const gx = galleryStartX + g * 2.45;
         const frame = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.42, 0.08), posterFrameMat);
@@ -1046,7 +1087,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const img = new THREE.Mesh(
           new THREE.PlaneGeometry(2.04, 1.28),
           new THREE.MeshStandardMaterial({
-            map: createMercuryBoardTexture(g + 1, `Mercury Image ${g + 1}`, false),
+            map: textureLoader.load(mercuryImages[g]),
             roughness: 0.82,
             metalness: 0.02,
           })
