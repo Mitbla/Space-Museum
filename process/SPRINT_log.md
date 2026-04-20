@@ -87,3 +87,18 @@
 
 ### Sprint 6 Retrospective:
 *Successes*: By reusing the `.hero-cta` variable, the visual identity flows consistently from the top of the page down. The new layout balances dense text paragraphs beautifully alongside interactive `model-viewer` elements.
+
+---
+
+## Sprint 7: 3D Museum Interactive Overhaul
+**Objective**: Overhaul the immersive 3D space to feature full `.glb` planet models, photographic textures, widespread gallery art, and properly aligned instructional placards.
+
+### Milestones Completed:
+1. **Model Loader Integration**: Dynamically mapped and spawned custom `.glb` meshes for Mars, Jupiter, Neptune, and Mercury while auto-scaling them via BoundingBox ratios.
+2. **Textural Mapping**: Mapped high-definition `_surface.png` files across primitive spheres for Venus, Earth, Saturn, and Uranus to dramatically increase visual fidelity.
+3. **Placard Re-alignment**: Altered spatial rendering logic (`boardZ`) to pull the lore cards forward to `Z = -3.5`, guaranteeing visibility across all 8 upper floors.
+4. **Universal Gallery Distribution**: Rewrote the gallery instantiation loop to place framed planetary photographs universally across all 8 stories.
+
+### Sprint 7 Retrospective:
+*Successes*: By utilizing generalized dictionary mappings (`modelMap`, `textureMap`, and `galleryImageMap`), the script is extremely scalable—adding new 3D models later requires zero code logic changes.
+*Friction*: The `app.js` file previously localized `.glb` models and galleries specifically to Floor 1, requiring broad structural extraction to uniformly distribute them.

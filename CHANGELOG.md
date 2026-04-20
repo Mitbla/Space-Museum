@@ -51,3 +51,10 @@ All notable changes to the Space Museum project will be documented in this file.
 * Designed and integrated the **'Dr. M. Explorer' profile** to anchor the site's authority and institutional credibility.
 * Implemented `sessionStorage` caching mechanism. **Reason**: Resolved state-loss friction whereby visitors clicking back from `artifact.html` were forced to restart their timeline from the Sun.
 * Overhauled "Latest NASA Discoveries". **Reason**: Original Wikimedia links were prone to breaking; replaced with OSIRIS-REx, Europa Clipper, and Psyche missions utilizing generated local image assets for maximum stability.
+
+## [2026-04-17] - 3D Museum Interactive Overhaul (Sprint 7)
+### New Features & Assets
+* **Integrated `.glb` 3D Models**: Dynamically instantiated `Mercury`, `mars`, `jupitor`, and `Neptune` into `app.js` using `GLTFLoader`. **Reason**: The user requested these specific models over generic spheres to increase fidelity.
+* **Sphere Image Textures**: Loaded high-resolution planetary `_surface.png` files to wrap around the proxy placeholder spheres for Venus, Earth, Saturn, and Uranus. **Reason**: Improves aesthetic design where full `.glb` models were unavailable.
+* **Expanded Image Galleries**: Iterated the left-wall framed poster gallery across all 8 floors using an image-map object linking to `_angle` and `_surface` PNGs. **Reason**: Previously only the first floor received gallery art.
+* **Info Card Relocation**: Shifted the `boardZ` parameter dynamically pulling the 5 detailed informational lore cards forward to `Z = -3.5` on all floors. **Reason**: Resolved an issue rendering the cards invisible/absent on upper floors.

@@ -83,16 +83,18 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   const cloudTex = createCloudTexture();
-  for (let i = 0; i < 18; i++) {
+  for (let c = 0; c < 30; c++) {
     const cloud = new THREE.Sprite(
       new THREE.SpriteMaterial({ map: cloudTex, transparent: true, opacity: 0.7, depthWrite: false })
     );
-    cloud.position.set(
-      -34 + Math.random() * 68,
-      20 + Math.random() * 14,
-      -34 + Math.random() * 56
-    );
-    const s = 4 + Math.random() * 5;
+    const a = Math.random() * Math.PI * 2;
+    // Push clouds far out so their wide sprites (30-70 units) don't bleed into the museum walls!
+    const r = 150 + Math.random() * 100;
+    const sx = Math.cos(a) * r;
+    const sz = Math.sin(a) * r;
+    const sy = 25 + Math.random() * 50;
+    cloud.position.set(sx, sy, sz);
+    const s = 30 + Math.random() * 40;
     cloud.scale.set(s * 1.8, s, 1);
     scene.add(cloud);
   }
@@ -951,30 +953,63 @@ window.addEventListener('DOMContentLoaded', async () => {
   const infoCardMat = new THREE.MeshStandardMaterial({ color: 0xf7f9ff, roughness: 0.35, metalness: 0.05 });
   const posterFrameMat = new THREE.MeshStandardMaterial({ color: 0x3b4550, roughness: 0.55, metalness: 0.2 });
 
+  const modelMap = {
+    'Mercury': '../Mercury.glb',
+    'Mars': '../mars.glb',
+    'Jupiter': '../jupitor.glb',
+    'Neptune': '../Neptune.glb'
+  };
+
+  const textureMap = {
+    'Venus': '../venus_surface_1773690747497.png',
+    'Earth': '../earth_surface_1773690776458.png',
+    'Saturn': '../saturn_surface.png',
+    'Uranus': '../uranus_surface.png'
+  };
+
+  const galleryImageMap = {
+    'Mercury': ['../mercury_surface_1773690721650.png', '../mercury_angle_1773690735151.png'],
+    'Venus': ['../venus_surface_1773690747497.png', '../venus_angle_1773690762787.png'],
+    'Earth': ['../earth_surface_1773690776458.png', '../earth_angle_1773690788539.png'],
+    'Mars': ['../mars_surface.png', '../mars_angle.png'],
+    'Jupiter': ['../jupiter_surface.png', '../jupiter_angle.png'],
+    'Saturn': ['../saturn_surface.png', '../saturn_angle.png'],
+    'Uranus': ['../uranus_surface.png', '../uranus_angle.png'],
+    'Neptune': ['../neptune_surface.png', '../neptune_angle.png']
+  };
+
   function createPlanetFloorExhibit(planet, floorNumber) {
     const fy = getFloorY(floorNumber);
     const displayX = 2.0;
     const displayZ = -6.2;
 
-    const podium = new THREE.Mesh(new THREE.CylinderGeometry(1.05, 1.2, 0.8, 28), podiumMat);
-    podium.position.set(displayX, fy + 0.4, displayZ);
-    scene.add(podium);
+    if (modelMap[planet.name]) {
+      const planetGroup = new THREE.Group();
+      planetGroup.position.set(displayX, fy + 1.05 + planet.radius, displayZ);
+      scene.add(planetGroup);
+      planetExhibits.push({ mesh: planetGroup, baseY: planetGroup.position.y, speed: 0.22 });
 
-    if (planet.name === 'Mercury') {
-      const mercuryGroup = new THREE.Group();
-      mercuryGroup.position.set(displayX, fy + 1.05 + planet.radius, displayZ);
-      scene.add(mercuryGroup);
-      planetExhibits.push({ mesh: mercuryGroup, baseY: mercuryGroup.position.y, speed: 0.22 });
-
-      gltfLoader.load('../Mercury.glb', (gltf) => {
+      gltfLoader.load(modelMap[planet.name], (gltf) => {
         const model = gltf.scene;
-        model.scale.setScalar(0.42);
-        mercuryGroup.add(model);
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+        const maxDim = Math.max(size.x, size.y, size.z);
+        if (maxDim > 0) {
+          model.scale.setScalar((planet.radius * 2) / maxDim);
+        }
+        planetGroup.add(model);
       });
     } else {
+      const materialOptions = { color: planet.color, roughness: 0.85, metalness: 0.05 };
+      if (textureMap[planet.name]) {
+          materialOptions.map = textureLoader.load(textureMap[planet.name]);
+          materialOptions.color = 0xffffff;
+      }
+      
       const planetMesh = new THREE.Mesh(
         new THREE.SphereGeometry(planet.radius, 28, 28),
-        new THREE.MeshStandardMaterial({ color: planet.color, roughness: 0.85, metalness: 0.05 })
+        new THREE.MeshStandardMaterial(materialOptions)
       );
       planetMesh.position.set(displayX, fy + 1.05 + planet.radius, displayZ);
       scene.add(planetMesh);
@@ -1004,8 +1039,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const activeLoreCards = planetLoreCards[planet.name];
     if (activeLoreCards) {
       const rawBoardZ = museumBounds.maxZ - 0.36;
-      // Pull floor 2 boards back by 3.2 so they sit solidly on the balcony floor.
-      const boardZ = floorNumber === 2 ? rawBoardZ - 3.2 : rawBoardZ;
+      const boardZ = floorNumber === 2 ? -3.5 : rawBoardZ;
       const boardStepX = 2.0;
       const boardCenterX = 2.5;
       const boardStartX = boardCenterX - ((activeLoreCards.length - 1) * boardStepX) / 2;
@@ -1074,11 +1108,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    // Keep the extra image gallery only on the first floor
-    if (floorNumber === 1 && planet.name === 'Mercury') {
+    // Image gallery for all floors
+    const planetGallery = galleryImageMap[planet.name];
+    if (planetGallery) {
       const galleryStartX = -1.4;
-      const mercuryImages = ['../mercury_surface_1773690721650.png', '../mercury_angle_1773690735151.png'];
-      for (let g = 0; g < 2; g++) {
+      for (let g = 0; g < planetGallery.length; g++) {
         const gx = galleryStartX + g * 2.45;
         const frame = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.42, 0.08), posterFrameMat);
         frame.position.set(gx, fy + 1.95, -12.78);
@@ -1087,7 +1121,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const img = new THREE.Mesh(
           new THREE.PlaneGeometry(2.04, 1.28),
           new THREE.MeshStandardMaterial({
-            map: textureLoader.load(mercuryImages[g]),
+            map: textureLoader.load(planetGallery[g]),
             roughness: 0.82,
             metalness: 0.02,
           })

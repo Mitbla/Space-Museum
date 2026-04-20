@@ -124,3 +124,17 @@ All 7 UI features implemented and code-verified. Browser visual verification pen
 
 ### Sign-off:
 Layout restructure completed. Responsive styling ensures seamless scaling.
+
+---
+
+## Execution Cycle: v1.5 — 3D Museum Overhaul (2026-04-17)
+
+### 16. Asset Integration & Floor Mapping
+**Status:** **[PASS — Code Verified]**
+**Details:**
+*   **Issue logged:** Floors 3-8 originally lacked image gallery posters, and planets were represented by bare, flat primitive spheres. Also, upper-floor lore cards were clipping into boundary walls.
+*   **Resolution:** Mapped `GLTFLoader` objects to replace the primitives where models existed. Wrapped remaining spheres cleanly with image textures. Shifted info card origin points `Z = -3.5` to clear all interior collision buffers and pulled gallery loops into the global `createPlanetFloorExhibit` function.
+*   Verified that dynamic object scaling properly utilizes standard BoundingBox ratios to lock enormous GLTF imports to the target podium radius.
+
+### Sign-off:
+3D Museum fully scaled and populated. Verified via structured source-code analysis.
