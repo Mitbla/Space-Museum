@@ -955,15 +955,15 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const modelMap = {
     'Mercury': '../Mercury.glb',
+    'Venus': '../Venus.glb',
     'Mars': '../mars.glb',
     'Jupiter': '../jupitor.glb',
-    'Neptune': '../Neptune.glb'
+    'Neptune': '../Neptune.glb',
+    'Saturn': '../SaturnModel.glb'
   };
 
   const textureMap = {
-    'Venus': '../venus_surface_1773690747497.png',
     'Earth': '../earth_surface_1773690776458.png',
-    'Saturn': '../saturn_surface.png',
     'Uranus': '../uranus_surface.png'
   };
 
@@ -998,6 +998,12 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (maxDim > 0) {
           model.scale.setScalar((planet.radius * 2) / maxDim);
         }
+        
+        if (planet.name === 'Saturn') {
+          model.scale.multiplyScalar(2.2);
+          model.rotation.z = Math.PI / 8; // Slant
+        }
+        
         planetGroup.add(model);
       });
     } else {
@@ -1013,24 +1019,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       );
       planetMesh.position.set(displayX, fy + 1.05 + planet.radius, displayZ);
       scene.add(planetMesh);
-
-      if (planet.name === 'Saturn') {
-        const ring = new THREE.Mesh(
-          new THREE.RingGeometry(planet.radius * 1.35, planet.radius * 1.95, 48),
-          new THREE.MeshStandardMaterial({
-            color: 0xcfc6a6,
-            roughness: 0.7,
-            metalness: 0.02,
-            side: THREE.DoubleSide,
-            transparent: true,
-            opacity: 0.75,
-          })
-        );
-        ring.rotation.x = Math.PI / 2.7;
-        ring.position.copy(planetMesh.position);
-        scene.add(ring);
-        planetExhibits.push({ mesh: ring, baseY: ring.position.y, speed: 0.16 });
-      }
 
       planetExhibits.push({ mesh: planetMesh, baseY: planetMesh.position.y, speed: 0.22 });
     }

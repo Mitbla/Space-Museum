@@ -32,7 +32,7 @@ const museumData = {
         dangers: "Venus hosts the most hostile planetary surface environment in the inner solar system. The crushing atmospheric pressure at the surface is 92 times that of Earth—equivalent to the pressure found a kilometer deep in Earth\'s oceans. The runaway greenhouse effect pushed mean surface temperatures to 465°C (867°F), which is hot enough to glow dull red in the dark and melt lead and zinc. Adding to the nightmare, the atmosphere is 96.5% massive carbon dioxide, and the upper cloud decks rain continuous, concentrated sulfuric acid that vaporizes before hitting the ground. The thick atmosphere creates a nearly uniform surface temperature across the entire planet, meaning there is no relief at the poles or during the long Venusian night—the greenhouse insulation is so effective that temperature varies by less than a few degrees anywhere on the surface. Lightning storms of extraordinary intensity have been detected in the sulfuric acid cloud layers, adding electrical discharge hazards to the already lethal chemical and thermal environment. The surface pressure is so extreme that the atmosphere near the ground behaves almost like a supercritical fluid rather than a gas, creating bizarre optical effects including extreme refraction that would bend light around the planet's curvature, theoretically allowing an observer to see the back of their own head. Any lander must be engineered to withstand conditions comparable to deep-ocean pressure vessels while simultaneously resisting temperatures that exceed the operating limits of most electronics and structural alloys.",
         habitability: "The surface of Venus guarantees immediate and catastrophic structural failure for almost anything. Even heavily armored Soviet Venera probes only survived for a maximum of 127 minutes before completely succumbing to the heat and pressure. Human habitability is entirely ruled out on the ground. However, paradoxically, about 50 kilometers up in the Venusian atmosphere, the temperature and pressure are remarkably Earth-like (1 bar and roughly 20-30°C). Concepts like NASA\'s HAVOC project propose floating aerostat habitats in this cloud layer, though inhabitants would still require absolute isolation from the corrosive sulfuric acid environment. The cloud-layer habitat concept has gained scientific traction because Venus's upper atmosphere offers several advantages: Earth-like gravity (0.9g), substantial atmospheric shielding from cosmic radiation (far superior to Mars), and solar energy availability second only to Mercury. A breathable nitrogen-oxygen atmosphere would actually be a lifting gas in Venus's dense CO2 atmosphere, meaning a habitat filled with Earth-normal air would naturally float at the correct altitude. In 2020, the controversial detection of phosphine gas in Venus's cloud layer sparked intense debate about the possibility of microbial life existing in the temperate cloud zone—organisms that could potentially metabolize sulfur compounds and float in aerosol droplets. While subsequent studies have questioned the phosphine detection, the hypothesis has reinvigorated scientific interest in Venus as an astrobiological target and has led to multiple planned missions including NASA's VERITAS and DAVINCI+ probes scheduled for the early 2030s.",
         stats: { mass: "4.867 × 10²⁴ kg", diameter: "12,104 km", distance: "0.72 AU", orbitalPeriod: "225 days", moons: "0" },
-        imagePath: "venus_premium_1773689153241.png",
+        modelPath: "Venus.glb",
         gallery: ["venus_surface_1773690747497.png", "venus_angle_1773690762787.png"]
     },
     earth: {
@@ -76,7 +76,7 @@ const museumData = {
         dangers: "Similar to Jupiter, Saturn is an almost impossible environment to traverse. The upper atmosphere features violent winds, reaching up to 1,800 kilometers per hour (1,100 mph)—faster than the speed of sound. Probes descending into the atmosphere face rapidly escalating pressure and temperatures, eventually meeting a crushing interior similar to Jupiter\'s metallic hydrogen core. While the radiation environment is significantly less severe than Jupiter\'s, navigating the intricate ring system presents an unrelenting hazard of high-velocity micro-meteoroid collisions that could shred an unprotected vehicle. The ring particles range in size from microscopic dust grains to house-sized boulders of nearly pure water ice, all orbiting at velocities exceeding 70,000 kilometers per hour. Even a collision with a grain-sized particle at these speeds would carry the kinetic energy of a bullet, and the ring plane contains billions of such objects per cubic kilometer. The Cassini spacecraft's Grand Finale mission in 2017 deliberately dove between Saturn and the innermost ring—a gap never before traversed—requiring precise navigation through a corridor just 2,000 kilometers wide where even a minor collision could have been catastrophic. Saturn's atmosphere harbors enormous periodic storm systems called Great White Spots that erupt approximately every 30 Earth years. These mega-storms can encircle the entire planet, generating lightning bolts 10,000 times more powerful than terrestrial lightning, with thunder audible (through radio frequency translation) from orbit. The planet also features a bizarre, persistent hexagonal jet stream pattern at its north pole, approximately 30,000 kilometers across, that has remained stable for decades—a unique atmospheric phenomenon not observed on any other planetary body.",
         habitability: "Saturn itself cannot be inhabited, acting solely as a hostile gravitational anchor. However, it boasts an incredible system of 146 known moons, two of which are prime targets for astrobiological study. Titan, the largest moon, features a thick, nitrogen-rich atmosphere and surface lakes of liquid methane and ethane, offering a bizarre analog to an early Earth and a potential crucible for unique hydrocarbon-based life. Enceladus, a much smaller icy moon, features active cryovolcanoes shooting plumes of water, organic molecules, and salts into space, confirming the existence of a warm, habitable sub-surface ocean. Titan is the only moon in the solar system with a dense atmosphere—its surface pressure is actually 50% higher than Earth's, and its nitrogen-rich composition (95% nitrogen) makes it the most Earth-like atmosphere of any body in the solar system. The Huygens probe, which landed on Titan in 2005, revealed a surface sculpted by liquid methane rain, rivers, and seas, with rounded hydrocarbon pebbles resembling a terrestrial riverbed. At -179°C, Titan's methane cycle mirrors Earth's water cycle, raising the tantalizing question of whether exotic biochemistry based on liquid hydrocarbons rather than water could theoretically emerge. Enceladus, despite being only 500 kilometers across, has emerged as perhaps the most compelling astrobiological target in the solar system since Cassini flew through its south polar plumes and detected molecular hydrogen, complex organic molecules, and hydrothermal activity signatures—the same chemical recipe that drives life at deep-sea vents on Earth. Future missions such as NASA's proposed Enceladus Orbilander concept aim to sample these plumes directly and analyze the material for biosignatures, potentially answering the question of whether life exists beyond Earth within the next two decades.",
         stats: { mass: "5.683 × 10²⁶ kg", diameter: "116,460 km", distance: "9.54 AU", orbitalPeriod: "10,759 days", moons: "146" },
-        imagePath: "saturn_premium_1773689168077.png",
+        modelPath: "SaturnModel.glb",
         gallery: ["saturn_surface.png", "saturn_angle.png"]
     },
     uranus: {
@@ -227,15 +227,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     planetDescription.textContent = data.description;
                     
                     if (data.modelPath && planetModel) {
-                        planetImage.style.display = 'none';
+                        if (planetImage) planetImage.style.display = 'none';
                         planetModel.style.display = 'block';
-                        planetModel.src = data.modelPath;
-                        planetModel.alt = data.title + " 3D Model";
+                        
+                        // Properly clear the model-viewer to wipe the old Saturn model out of memory
+                        planetModel.removeAttribute('src');
+                        
+                        // Give it a tiny tick before assigning new one
+                        setTimeout(() => {
+                            planetModel.src = data.modelPath;
+                            planetModel.alt = data.title + " 3D Model";
+                        }, 20);
+
+                        if (planetKey === 'saturn') {
+                            planetModel.style.transform = 'scale(1.4) translateY(0%)';
+                            planetModel.setAttribute('orientation', '-15deg 0deg 20deg'); // Slant it
+                        } else {
+                            planetModel.style.transform = 'scale(0.93) translateY(0%)';
+                            planetModel.setAttribute('orientation', '0deg 0deg 0deg'); // Reset it safely
+                        }
                     } else if (planetImage && data.imagePath) {
                         if(planetModel) planetModel.style.display = 'none';
                         planetImage.style.display = 'block';
                         planetImage.src = data.imagePath;
-                        planetImage.alt = data.title + " from Space";
+                        planetImage.alt = "Surface of " + data.title;
                     }
                     
                     const exploreBtn = document.getElementById('exploreBtn');
