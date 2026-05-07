@@ -954,17 +954,19 @@ window.addEventListener('DOMContentLoaded', async () => {
   const posterFrameMat = new THREE.MeshStandardMaterial({ color: 0x3b4550, roughness: 0.55, metalness: 0.2 });
 
   const modelMap = {
+    'Sun': '../sun.glb',
     'Mercury': '../Mercury.glb',
     'Venus': '../Venus.glb',
+    'Earth': '../earth.glb',
     'Mars': '../mars.glb',
-    'Jupiter': '../jupitor.glb',
-    'Neptune': '../Neptune.glb',
-    'Saturn': '../SaturnModel.glb'
+    'Jupiter': '../jupiter_with_moons.glb',
+    'Saturn': '../SaturnModel.glb',
+    'Uranus': '../uranus.glb',
+    'Neptune': '../neptune.glb'
   };
 
   const textureMap = {
-    'Earth': '../earth_surface_1773690776458.png',
-    'Uranus': '../uranus_surface.png'
+    // Left empty since all planets now have 3D models
   };
 
   const galleryImageMap = {
