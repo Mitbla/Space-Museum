@@ -41,45 +41,23 @@
                     </ul>
                 </nav>
             </header>
-
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">Explore the<br>Vast Wonders<br>of Our <span class="highlight-text">Solar
+            <div style="display:flex; flex-direction:row; align-items:center; gap:3rem; flex:1; margin-top:2rem;">
+                <div class="hero-content" style="flex:1; min-width:0;">
+                    <h1 class="hero-title">Explore the<br>
+                        Vast Wonders<br>of Our <span class="highlight-text">Solar
                             System <svg class="orbit-svg" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
                                 <ellipse cx="50" cy="20" rx="45" ry="15" fill="none" stroke="#d4af37" stroke-width="2"
                                     transform="rotate(-15 50 20)" />
                                 <circle cx="85" cy="5" r="3" fill="#d4af37" />
                             </svg></span></h1>
-                    <p class="hero-description">Embark on an extraordinary journey of discovery and imagination as you
-                        explore the vast wonders of our solar system and beyond. Engage with our interactive artifact
-                        archive below, or completely immerse yourself in the Virtual Museum Tour.</p>
+                    <p class="hero-description">Embark on an extraordinary journey through the cosmos.</p>
                     <div class="hero-buttons">
                         <button class="hero-cta" id="startExploringBtn">Start Exploring</button>
                         <a href="Planetariam Museum/index.html" class="hero-cta secondary-cta">Virtual Museum Tour</a>
                     </div>
-
-
                 </div>
-
-                <div class="hero-graphics">
-                    <div class="astronaut-wrapper" style="
-                        position: relative;
-                        display: inline-block;
-                        width: 100%;
-                        max-width: 600px;
-                        height: auto;
-                        z-index: 2;
-                        animation: floatAstronaut 6s ease-in-out infinite;
-                        background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 90%);
-                        filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
-                    ">
-                        <img src="astronaut.png" alt="Astronaut" class="astronaut-img" style="
-                            width: 100%; 
-                            display: block; 
-                            -webkit-mask-image: radial-gradient(ellipse at center, black 70%, transparent 100%);
-                            mask-image: radial-gradient(ellipse at center, black 70%, transparent 100%);
-                        ">
-                    </div>
+                <div class="hero-graphics" style="flex:0 0 auto; width:min(45%, 500px);">
+                    <img src="astronaut.png" alt="Floating Astronaut" class="hero-astronaut">
                 </div>
             </div>
         </section>

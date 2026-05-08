@@ -105,7 +105,7 @@ const museumData = {
         habitability: "Like all the other giant planets, Neptune provides no surface and no habitable environment for carbon-based life within its atmosphere. Its largest moon, Triton, is a strange anomaly: it orbits retrograde (backward) to Neptune\'s rotation, suggesting it was likely a dwarf planet captured from the Kuiper Belt. Triton is one of the coldest objects in the solar system (-235°C), yet it surprisingly features an active surface with geysers erupting sublimated nitrogen. While fascinating, it lacks the accessible liquid water oceans that make the moons of Jupiter and Saturn prime candidates for habitability. Triton's retrograde orbit and its remarkable similarity to Pluto in size, density, and surface composition strongly support the capture hypothesis—Neptune's gravity likely seized Triton from a passing Kuiper Belt orbit, and the resulting tidal interactions circularized its initially chaotic trajectory over millions of years. This capture event likely destroyed any original regular satellite system Neptune may have possessed, explaining why the planet's remaining moons are small and scattered. Despite surface temperatures of -235°C, Triton's nitrogen geysers—observed erupting material 8 kilometers into its thin atmosphere—indicate subsurface thermal processes that could potentially maintain pockets of liquid water mixed with ammonia antifreeze at depth. The Neptune system occupies a scientifically critical position as the gateway to the Kuiper Belt, the vast reservoir of icy bodies beyond the planets. Understanding Neptune's formation, migration, and gravitational influence on the Kuiper Belt is essential to unraveling the early history of the solar system, as current models suggest Neptune migrated outward from a much closer original orbit, scattering and reshaping the distribution of comets and dwarf planets in the process.",
         stats: { mass: "1.024 × 10²⁶ kg", diameter: "49,244 km", distance: "30.07 AU", orbitalPeriod: "60,190 days", moons: "16" },
         imagePath: "neptune_premium_1773689193167.png",
-        modelPath: "neptune.glb",
+        modelPath: "Neptune.glb",
         gallery: ["neptune_surface.png", "neptune_angle.png"]
     }
 };
@@ -189,123 +189,113 @@ document.addEventListener('DOMContentLoaded', () => {
     if (startExploringBtn) {
         startExploringBtn.addEventListener('click', () => {
             const target = document.getElementById('explore');
-            if(target) target.scrollIntoView({ behavior: 'smooth' });
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
         });
     }
 
-    const exploreCards = document.querySelectorAll('.explore-card');
-    exploreCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const planetTarget = this.getAttribute('data-planet');
-            const timelineItem = document.querySelector(`.timeline-item[data-planet="${planetTarget}"]`);
-            if (timelineItem) {
-                timelineItem.click();
-                const target = document.getElementById('explore');
-                if(target) target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
 
     // --- Timeline Interaction ---
     const timelineItems = document.querySelectorAll('.timeline-item');
     const planetTitle = document.getElementById('planetTitle');
     const planetDescription = document.getElementById('planetDescription');
     const planetImage = document.getElementById('planetImage');
-    
+
     timelineItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
             // Remove active class from all
             timelineItems.forEach(el => el.classList.remove('active'));
-            
+
             // Add active class to clicked
             this.classList.add('active');
-            
+
             // Get data for selected planet
             const planetKey = this.getAttribute('data-planet');
             sessionStorage.setItem('activePlanet', planetKey);
 
             if (museumData[planetKey]) {
                 const data = museumData[planetKey];
-                
+
                 // Animate change (simple opacity fade)
                 planetTitle.style.opacity = 0;
                 planetDescription.style.opacity = 0;
-                if(planetImage) planetImage.style.opacity = 0;
-                
+                if (planetImage) planetImage.style.opacity = 0;
+
                 const planetModel = document.getElementById('planetModel');
-                if(planetModel) planetModel.style.opacity = 0;
-                
+                if (planetModel) planetModel.style.opacity = 0;
+
                 setTimeout(() => {
                     planetTitle.textContent = data.title;
                     planetDescription.textContent = data.description;
-                    
+
                     if (data.modelPath && planetModel) {
                         if (planetImage) planetImage.style.display = 'none';
                         planetModel.style.display = 'block';
-                        
+
                         // Properly clear the model-viewer to wipe the old Saturn model out of memory
                         planetModel.removeAttribute('src');
-                        
+
                         // Give it a tiny tick before assigning new one
                         setTimeout(() => {
                             planetModel.src = data.modelPath;
                             planetModel.alt = data.title + " 3D Model";
                         }, 20);
 
-                          if (planetKey === 'saturn') {
-                              planetModel.style.transform = 'scale(1.4) translateY(0%)';
-                              planetModel.setAttribute('orientation', '-15deg 0deg 20deg'); // Slant it
-                              planetModel.style.width = '100%';
-                              planetModel.style.height = '100%';
-                              planetModel.style.left = '0';
-                              planetModel.style.top = '0';
-                              if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'visible';
-                          } else if (planetKey === 'uranus') {
-                              planetModel.style.transform = 'scale(1.2) translateY(0%)';
-                              planetModel.setAttribute('orientation', '0deg 0deg 90deg'); // Rotate Z-axis to lay rings horizontally
-                              planetModel.style.width = '100%';
-                              planetModel.style.height = '100%';
-                              planetModel.style.left = '0';
-                              planetModel.style.top = '0';
-                              if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'visible';
-                          } else if (planetKey === 'jupiter') {
-                              // Increase physical canvas size to size up Jupiter and push moons off-canvas
-                              planetModel.style.transform = 'translateY(0%)';
-                              planetModel.setAttribute('orientation', '0deg 0deg 0deg');
-                              planetModel.style.width = '320%';
-                              planetModel.style.height = '320%';
-                              planetModel.style.position = 'absolute';
-                              planetModel.style.left = '-110%';
-                              planetModel.style.top = '-110%';
-                              if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'hidden'; // Crop the moons globally out
-                          } else {
-                              planetModel.style.transform = 'scale(0.93) translateY(0%)';
-                              planetModel.setAttribute('orientation', '0deg 0deg 0deg'); // Reset it safely
-                              planetModel.style.width = '100%';
-                              planetModel.style.height = '100%';
-                              planetModel.style.left = '0';
-                              planetModel.style.top = '0';
-                              if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'visible';
-                          }
+                        if (planetKey === 'saturn') {
+                            planetModel.style.transform = 'scale(1.4) translateY(0%)';
+                            planetModel.setAttribute('orientation', '-15deg 0deg 20deg'); // Slant it
+                            planetModel.style.width = '100%';
+                            planetModel.style.height = '100%';
+                            planetModel.style.left = '0';
+                            planetModel.style.top = '0';
+                            if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'visible';
+                        } else if (planetKey === 'uranus') {
+                            planetModel.style.transform = 'scale(1.2) translateY(0%)';
+                            // Pitch the model 75 degrees (the middle value) to lay the vertical rings 
+                            // down to West-to-East, while keeping left-to-right rotation!
+                            planetModel.setAttribute('orientation', '0deg 75deg 0deg');
+                            planetModel.style.width = '100%';
+                            planetModel.style.height = '100%';
+                            planetModel.style.left = '0';
+                            planetModel.style.top = '0';
+                            if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'visible';
+                        } else if (planetKey === 'jupiter') {
+                            // Increase physical canvas size to size up Jupiter and push moons off-canvas
+                            planetModel.style.transform = 'translateY(0%)';
+                            planetModel.setAttribute('orientation', '0deg 0deg 0deg');
+                            planetModel.style.width = '320%';
+                            planetModel.style.height = '320%';
+                            planetModel.style.position = 'absolute';
+                            planetModel.style.left = '-110%';
+                            planetModel.style.top = '-110%';
+                            if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'hidden'; // Crop the moons globally out
+                        } else {
+                            planetModel.style.transform = 'scale(0.93) translateY(0%)';
+                            planetModel.setAttribute('orientation', '0deg 0deg 0deg'); // Reset it safely
+                            planetModel.style.width = '100%';
+                            planetModel.style.height = '100%';
+                            planetModel.style.left = '0';
+                            planetModel.style.top = '0';
+                            if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'visible';
+                        }
                     } else if (planetImage && data.imagePath) {
-                        if(planetModel) planetModel.style.display = 'none';
+                        if (planetModel) planetModel.style.display = 'none';
                         planetImage.style.display = 'block';
                         planetImage.src = data.imagePath;
                         planetImage.alt = "Surface of " + data.title;
                     }
-                    
+
                     const exploreBtn = document.getElementById('exploreBtn');
                     if (exploreBtn) exploreBtn.href = "artifact.html?id=" + planetKey;
-                    
+
                     planetTitle.style.transition = 'opacity 0.5s ease';
                     planetDescription.style.transition = 'opacity 0.5s ease';
-                    if(planetImage) planetImage.style.transition = 'opacity 0.5s ease';
-                    if(planetModel) planetModel.style.transition = 'opacity 0.5s ease';
-                    
+                    if (planetImage) planetImage.style.transition = 'opacity 0.5s ease';
+                    if (planetModel) planetModel.style.transition = 'opacity 0.5s ease';
+
                     planetTitle.style.opacity = 1;
                     planetDescription.style.opacity = 1;
-                    if(planetImage && !data.modelPath) planetImage.style.opacity = 1;
-                    if(planetModel && data.modelPath) planetModel.style.opacity = 1;
+                    if (planetImage && !data.modelPath) planetImage.style.opacity = 1;
+                    if (planetModel && data.modelPath) planetModel.style.opacity = 1;
                 }, 300);
             }
         });
@@ -323,25 +313,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Accordion Interaction ---
     const accordionBtns = document.querySelectorAll('.accordion-btn');
-    
+
     accordionBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             // Toggle active state on the clicked button's parent
             const parentItem = this.parentElement;
             const content = this.nextElementSibling;
             const icon = this.querySelector('span');
-            
+
             // Allow multiple accordions to be open, or close others
             // Let's implement standard toggle for the one clicked
-            
+
             if (parentItem.classList.contains('active')) {
                 parentItem.classList.remove('active');
                 content.style.display = 'none';
-                if(icon) icon.textContent = '+';
+                if (icon) icon.textContent = '+';
             } else {
                 parentItem.classList.add('active');
                 content.style.display = 'block';
-                if(icon) icon.textContent = '-';
+                if (icon) icon.textContent = '-';
             }
         });
     });
@@ -357,51 +347,51 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize Bennu image
         discoveryImage.src = discoveryData.bennu.imagePath;
         discoveryImage.style.display = 'block';
-        if(discoveryPlaceholder) discoveryPlaceholder.style.display = 'none';
+        if (discoveryPlaceholder) discoveryPlaceholder.style.display = 'none';
     }
 
     discoveryItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
             // Remove active class from all
             discoveryItems.forEach(el => el.classList.remove('active'));
-            
+
             // Add active class to clicked
             this.classList.add('active');
-            
+
             // Get data for selected discovery
             const discKey = this.getAttribute('data-discovery');
             if (discoveryData[discKey]) {
                 const data = discoveryData[discKey];
-                
+
                 // Animate change
-                if(discoveryTitle) discoveryTitle.style.opacity = 0;
-                if(discoveryDescription) discoveryDescription.style.opacity = 0;
-                if(discoveryPlaceholder) discoveryPlaceholder.style.opacity = 0;
-                if(discoveryImage && discoveryImage.style.display !== 'none') discoveryImage.style.opacity = 0;
-                
+                if (discoveryTitle) discoveryTitle.style.opacity = 0;
+                if (discoveryDescription) discoveryDescription.style.opacity = 0;
+                if (discoveryPlaceholder) discoveryPlaceholder.style.opacity = 0;
+                if (discoveryImage && discoveryImage.style.display !== 'none') discoveryImage.style.opacity = 0;
+
                 setTimeout(() => {
-                    if(discoveryTitle) {
+                    if (discoveryTitle) {
                         discoveryTitle.textContent = data.title;
                         discoveryTitle.style.transition = 'opacity 0.5s ease';
                         discoveryTitle.style.opacity = 1;
                     }
-                    if(discoveryDescription) {
+                    if (discoveryDescription) {
                         discoveryDescription.textContent = data.description;
                         discoveryDescription.style.transition = 'opacity 0.5s ease';
                         discoveryDescription.style.opacity = 1;
                     }
-                    
-                    if(discoveryPlaceholder) {
+
+                    if (discoveryPlaceholder) {
                         discoveryPlaceholder.style.display = 'none'; // Hide placeholder
                     }
 
-                    if(discoveryImage) {
+                    if (discoveryImage) {
                         discoveryImage.src = data.imagePath;
                         discoveryImage.style.display = 'block'; // Show real image
                         discoveryImage.style.transition = 'opacity 0.5s ease';
                         discoveryImage.style.opacity = 1;
                     }
-                    
+
                     const discoveryLink = document.getElementById('discoveryLink');
                     if (discoveryLink) {
                         discoveryLink.href = data.link;
@@ -414,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Spacecraft Modal Interaction ---
     const craftIcons = document.querySelectorAll('.craft-icon-wrap');
     const modalOverlay = document.getElementById('craftModal');
-    
+
     if (modalOverlay) {
         const closeModalBtn = document.getElementById('closeModal');
         const modalIcon = document.getElementById('modalIcon');
@@ -430,18 +420,18 @@ document.addEventListener('DOMContentLoaded', () => {
             icon.addEventListener('click', () => {
                 const craftType = icon.getAttribute('data-craft');
                 const data = craftData[craftType];
-                
+
                 if (data) {
                     modalIcon.className = `fa-solid ${data.icon}`;
                     modalTitle.textContent = data.title;
                     modalDescription.textContent = data.description;
-                    
+
                     modalStatLabel1.textContent = data.label1;
                     modalStat1.textContent = data.stat1;
-                    
+
                     modalStatLabel2.textContent = data.label2;
                     modalStat2.textContent = data.stat2;
-                    
+
                     modalOverlay.classList.add('active');
                     document.body.style.overflow = 'hidden'; // Prevent background scrolling
                 }
@@ -469,10 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(bg); // Append to body so it wraps entirely
 
         // Initial batch of asteroids/comets
-        for(let i=0; i<40; i++) {
+        for (let i = 0; i < 40; i++) {
             createAsteroid(bg);
         }
-        
+
         // Continuously spawn new ones to keep the background alive
         setInterval(() => createAsteroid(bg), 1500);
 
@@ -484,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isComet = Math.random() > 0.85; // 15% chance to be a FontAwesome comet icon
         const ast = document.createElement('div');
         ast.classList.add('asteroid');
-        
+
         if (isComet) {
             ast.innerHTML = '<i class="fa-solid fa-meteor"></i>';
             ast.style.fontSize = (Math.random() * 8 + 8) + 'px'; // 8px to 16px
@@ -497,39 +487,39 @@ document.addEventListener('DOMContentLoaded', () => {
             ast.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
             ast.style.borderRadius = '50%';
         }
-        
+
         // Start position: heavily skewed to the right side and top so it can drift diagonally down-left across the screen
-        ast.style.left = (Math.random() * 150 + 20) + 'vw'; 
+        ast.style.left = (Math.random() * 150 + 20) + 'vw';
         ast.style.top = (Math.random() * 50 - 50) + 'vh'; // start up to 50vh above screen
-        
+
         // Random drift duration
         const duration = Math.random() * 30 + 15; // 15s to 45s
         ast.style.animationDuration = duration + 's';
-        
+
         container.appendChild(ast);
-        
+
         // Clean up DOM after animation completes
         setTimeout(() => {
-            if(ast.parentNode) ast.remove();
+            if (ast.parentNode) ast.remove();
         }, duration * 1000);
     }
 
     function createShootingStar(container) {
         const star = document.createElement('div');
         star.classList.add('shooting-star');
-        
+
         // Random start position (top/right quadrant)
         star.style.left = (Math.random() * 80 + 20) + 'vw';
         star.style.top = (Math.random() * 40 - 10) + 'vh';
-        
+
         container.appendChild(star);
-        
+
         // Remove after animation completes (1.2s)
         setTimeout(() => {
-            if(star.parentNode) star.remove();
+            if (star.parentNode) star.remove();
         }, 1200);
     }
-    
+
     // Initialize the background overlay
     initSpaceBackground();
 
@@ -576,39 +566,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
             return paragraphs.map(p => `<p>${p}</p>`).join('');
         }
-        
+
         if (planetId && museumData[planetId]) {
             const data = museumData[planetId];
-            
+
             // #2 + #10: Dynamic browser tab title with planet name
             document.title = `${data.title} — Artifact Profile | Space Museum`;
 
             pageTitle.textContent = data.title;
             const subtitleEl = document.getElementById('pageSubtitle');
             if (subtitleEl) subtitleEl.textContent = data.subtitle || "CLASSIFIED CELESTIAL BODY";
-            
+
             const detailHeroImage = document.getElementById('detailHeroImage');
             if (detailHeroImage) {
                 detailHeroImage.src = data.imagePath;
                 detailHeroImage.alt = data.title;
             }
-            
+
             // #6: Render formatted paragraphs instead of text walls
             const pBasic = document.getElementById('detailBasicInfo');
             if (pBasic) pBasic.innerHTML = formatTextIntoParagraphs(data.basicInfo);
-            
+
             const pDangers = document.getElementById('detailDangers');
             if (pDangers) pDangers.innerHTML = formatTextIntoParagraphs(data.dangers);
-            
+
             const pHab = document.getElementById('detailHabitability');
             if (pHab) pHab.innerHTML = formatTextIntoParagraphs(data.habitability);
-            
+
             const g1 = document.getElementById('galleryImg1');
             if (g1 && data.gallery[0]) {
                 g1.src = data.gallery[0];
                 g1.alt = data.title + " Observation 1";
             }
-            
+
             const g2 = document.getElementById('galleryImg2');
             if (g2 && data.gallery[1]) {
                 g2.src = data.gallery[1];
@@ -684,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- #3: Accordion Expand/Collapse ---
             document.querySelectorAll('.detail-card-content').forEach(card => {
                 card.style.cursor = 'pointer';
-                card.addEventListener('click', function(e) {
+                card.addEventListener('click', function (e) {
                     const body = this.querySelector('.accordion-body');
                     const btn = this.querySelector('.accordion-toggle');
                     const isExpanded = btn.getAttribute('aria-expanded') === 'true';
@@ -703,11 +693,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- #5: Crossfade Next/Prev Navigation ---
             document.querySelectorAll('.artifact-nav-btn').forEach(navBtn => {
-                navBtn.addEventListener('click', function(e) {
+                navBtn.addEventListener('click', function (e) {
                     e.preventDefault();
                     const targetUrl = this.href;
                     const pageContent = document.getElementById('artifactPageContent');
-                    
+
                     if (pageContent) {
                         pageContent.classList.add('crossfade-out');
                         setTimeout(() => {
@@ -731,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sectionIds = ['heroWrapper', 'sectionBasicInfo', 'sectionDangers', 'sectionHabitability', 'gallerySection'];
 
             // Add scrolled shadow class
-            window.addEventListener('scroll', function() {
+            window.addEventListener('scroll', function () {
                 if (stickyNav) {
                     stickyNav.classList.toggle('scrolled', window.scrollY > 100);
                 }
@@ -756,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Smooth scroll on nav click
             navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function (e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('data-section');
                     const targetEl = document.getElementById(targetId);
@@ -769,7 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- #7: Hero Image Parallax ---
             const heroImg = document.querySelector('.parallax-hero img');
             if (heroImg) {
-                window.addEventListener('scroll', function() {
+                window.addEventListener('scroll', function () {
                     const scrollY = window.scrollY;
                     const heroRect = document.getElementById('heroWrapper').getBoundingClientRect();
                     if (heroRect.bottom > 0) {
@@ -787,7 +777,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const lightboxClose = document.getElementById('lightboxClose');
 
             document.querySelectorAll('.gallery-item[data-lightbox]').forEach(item => {
-                item.addEventListener('click', function() {
+                item.addEventListener('click', function () {
                     const img = this.querySelector('img');
                     if (img && lightboxOverlay && lightboxImage) {
                         lightboxImage.src = img.src;
@@ -807,11 +797,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
             if (lightboxOverlay) {
-                lightboxOverlay.addEventListener('click', function(e) {
+                lightboxOverlay.addEventListener('click', function (e) {
                     if (e.target === this) closeLightbox();
                 });
             }
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeLightbox();
             });
 
@@ -833,13 +823,13 @@ function setupRocketTransition() {
     if (!transitionOverlay) return;
 
     virtualLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault(); // Stop immediate navigation
             const targetUrl = this.href;
 
             // Remove hidden to put it in DOM
             transitionOverlay.classList.remove('hidden');
-            
+
             // Force reflow
             void transitionOverlay.offsetWidth;
 
@@ -851,7 +841,7 @@ function setupRocketTransition() {
             // Smoke expansion takes 3.5 seconds to hit scale(15) white-out. Total time = 3.5 seconds maximum.
             setTimeout(() => {
                 window.location.href = targetUrl;
-            }, 3500); 
+            }, 3500);
         });
     });
 }
