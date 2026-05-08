@@ -23,10 +23,9 @@
 
 <body>
 
-    <div class="grid-container">
-
-        <!-- Hero Section -->
-        <section class="hero-section">
+    <!-- Scrollytelling Hero Section -->
+    <section class="scrolly-hero" id="scrolly-container">
+        <div class="sticky-container">
             <!-- Header Navigation -->
             <header class="hero-header">
                 <div class="logo-container">
@@ -41,26 +40,31 @@
                     </ul>
                 </nav>
             </header>
-            <div style="display:flex; flex-direction:row; align-items:center; gap:3rem; flex:1; margin-top:2rem;">
-                <div class="hero-content" style="flex:1; min-width:0;">
-                    <h1 class="hero-title">Explore the<br>
-                        Vast Wonders<br>of Our <span class="highlight-text">Solar
-                            System <svg class="orbit-svg" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
-                                <ellipse cx="50" cy="20" rx="45" ry="15" fill="none" stroke="#d4af37" stroke-width="2"
-                                    transform="rotate(-15 50 20)" />
-                                <circle cx="85" cy="5" r="3" fill="#d4af37" />
-                            </svg></span></h1>
-                    <p class="hero-description">Embark on an extraordinary journey through the cosmos.</p>
-                    <div class="hero-buttons">
-                        <button class="hero-cta" id="startExploringBtn">Start Exploring</button>
-                        <a href="Planetariam Museum/index.html" class="hero-cta secondary-cta">Virtual Museum Tour</a>
-                    </div>
-                </div>
-                <div class="hero-graphics" style="flex:0 0 auto; width:min(45%, 500px);">
-                    <img src="astronaut.png" alt="Floating Astronaut" class="hero-astronaut">
-                </div>
+
+            <canvas id="hero-canvas"></canvas>
+            
+            <!-- Loading State -->
+            <div id="loading-spinner" class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading Universe...</p>
             </div>
-        </section>
+
+            <div class="scroll-text-overlay">
+                <div class="scroll-text text-0">WELCOME TO...</div>
+                <div class="scroll-text text-30">OUR SOLAR SYSTEM</div>
+                <div class="scroll-text text-pre-bottom">ARE YOU READY TO EXPLORE?</div>
+                <a href="Planetariam Museum/index.html" class="scroll-text hero-cta final-hero-btn text-bottom">VISIT VIRTUAL MUSEUM</a>
+            </div>
+            
+            <div class="scroll-indicator">
+                <span>Scroll Down</span>
+                <i class="fa-solid fa-chevron-down blink"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grid -->
+    <div class="grid-container" style="margin-top: 2vh; padding-top: 0; z-index: 10;">
 
         <!-- Main Timeline / Artifact Selector -->
         <section class="timeline-section" id="explore" style="scroll-margin-top: 1rem;">

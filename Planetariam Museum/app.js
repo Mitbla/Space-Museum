@@ -985,6 +985,14 @@ window.addEventListener('DOMContentLoaded', async () => {
     const displayX = 2.0;
     const displayZ = -6.2;
 
+    // Add a podium directly beneath the floating planet
+    const planetPodium = new THREE.Mesh(
+      new THREE.CylinderGeometry(1.2, 1.4, 0.4, 32),
+      podiumMat
+    );
+    planetPodium.position.set(displayX, fy + 0.2, displayZ);
+    scene.add(planetPodium);
+
     if (modelMap[planet.name]) {
       const planetGroup = new THREE.Group();
       planetGroup.position.set(displayX, fy + 1.05 + planet.radius, displayZ);

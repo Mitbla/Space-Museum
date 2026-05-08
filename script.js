@@ -184,15 +184,150 @@ document.addEventListener('DOMContentLoaded', () => {
     // Enable smooth scrolling globally
     document.documentElement.style.scrollBehavior = 'smooth';
 
-    // --- Hero Section Interactions ---
-    const startExploringBtn = document.getElementById('startExploringBtn');
-    if (startExploringBtn) {
-        startExploringBtn.addEventListener('click', () => {
-            const target = document.getElementById('explore');
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-    }
+    // --- Scrollytelling Setup ---
+    const canvas = document.getElementById('hero-canvas');
+    if (canvas) {
+        const context = canvas.getContext('2d');
+        const frameCount = 111; // total number of frames in bigbangg
+        const currentFrame = index => (
+            `bigbangg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+        );
 
+        const images = [];
+        let imagesLoaded = 0;
+
+        // Preload all images
+        for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            img.onload = () => {
+                imagesLoaded++;
+                if (imagesLoaded === frameCount) {
+                    // All images loaded
+                    const loadingSpinner = document.getElementById('loading-spinner');
+                    if (loadingSpinner) {
+                        loadingSpinner.style.display = 'none';
+                    }
+                    
+                    // Draw first frame
+                    renderImage(0);
+                    // Bind scroll event
+                    window.addEventListener('scroll', handleScroll);
+                    // Initial update
+                    handleScroll();
+                }
+            };
+            images.push(img);
+        }
+
+        // Set canvas sizing
+        const updateCanvasSize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            if (imagesLoaded === frameCount) {
+                renderImage(Math.floor(calcScrollProgress() * (frameCount - 1)));
+            }
+        };
+        window.addEventListener('resize', updateCanvasSize);
+        updateCanvasSize();
+
+        function renderImage(index) {
+            if (!images[index]) return;
+            const img = images[index];
+            
+            // Background is dark so fill first
+            context.fillStyle = "#000";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw image covering/containing the canvas
+            const canvasRatio = canvas.width / canvas.height;
+            const imgRatio = img.width / img.height;
+
+            let drawWidth = canvas.width;
+            let drawHeight = canvas.height;
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (canvasRatio > imgRatio) {
+                // Canvas is wider, so width controls image bounds to cover
+                drawWidth = canvas.width;
+                drawHeight = canvas.width / imgRatio;
+                offsetY = (canvas.height - drawHeight) / 2;
+                offsetX = 0;
+            } else {
+                // Canvas is taller, so height controls image bounds to cover
+                drawHeight = canvas.height;
+                drawWidth = canvas.height * imgRatio;
+                offsetX = (canvas.width - drawWidth) / 2;
+                offsetY = 0;
+            }
+
+            context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+        }
+
+        function calcScrollProgress() {
+            const container = document.getElementById('scrolly-container');
+            if (!container) return 0;
+            
+            const scrollTop = window.scrollY;
+            const h = container.scrollHeight - window.innerHeight;
+            
+            // Scroll progress within the hero container only
+            let progress = scrollTop / h;
+            progress = Math.max(0, Math.min(1, progress));
+            return progress;
+        }
+
+        function handleScroll() {
+            const progress = calcScrollProgress();
+
+            // Finish the video sequence at 80% scroll to "hold" the last frame
+            const frameProgress = Math.min(1, progress / 0.8);
+            const frameIndex = Math.min(
+                frameCount - 1,
+                Math.floor(frameProgress * frameCount)
+            );
+            
+            requestAnimationFrame(() => renderImage(frameIndex));
+            
+            // Handle Text Overlays
+            const texts = {
+                0: document.querySelector('.text-0'),
+                30: document.querySelector('.text-30'),
+                preBtn: document.querySelector('.text-pre-bottom'),
+                btn: document.querySelector('.final-hero-btn'),
+            };
+
+            // Reset opacities
+            Object.values(texts).forEach(t => { if(t) t.style.opacity = 0; });
+
+            // "Welcome to..." starts visible, stays longer
+            if (progress >= 0 && progress < 0.40) {
+                if(texts[0]) texts[0].style.opacity = progress < 0.30 ? 1 : 1 - ((progress - 0.30) / 0.1);
+            }
+            
+            // "Our Solar System" fades in, stays, and disappears a bit earlier
+            if (progress >= 0.20 && progress < 0.70) {
+                const fade = progress < 0.30 
+                             ? (progress - 0.20) / 0.1 
+                             : progress < 0.55 ? 1 : 1 - ((progress - 0.55) / 0.1);
+                if(texts[30]) texts[30].style.opacity = Math.max(0, fade);
+            }
+            
+            // Button fades in at the end below the texts
+            if (progress >= 0.65) {
+                const fade = Math.min(1, (progress - 0.65) / 0.15);
+                if (texts.preBtn) texts.preBtn.style.opacity = fade;
+                if (texts.btn) texts.btn.style.opacity = fade;
+            }
+            
+            // Fade out scroll indicator quickly
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.style.opacity = progress > 0.05 ? 0 : 1;
+            }
+        }
+    }
 
     // --- Timeline Interaction ---
     const timelineItems = document.querySelectorAll('.timeline-item');
