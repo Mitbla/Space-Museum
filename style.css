@@ -1322,7 +1322,7 @@ h2,
 }
 
 .accordion-body.collapsed::after {
-    content: 'Click to read more ▾';
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -1330,15 +1330,6 @@ h2,
     height: 70px;
     background: linear-gradient(transparent 0%, var(--card-bg) 70%);
     pointer-events: none;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 0.5rem;
-    font-size: 0.7rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(77, 171, 247, 0.5);
-    font-weight: 600;
 }
 
 .accordion-body.expanded {
