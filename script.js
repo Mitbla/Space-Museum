@@ -103,7 +103,7 @@ const museumData = {
         habitability: "Like all the other giant planets, Neptune provides no surface and no habitable environment for carbon-based life within its atmosphere. Its largest moon, Triton, is a strange anomaly: it orbits retrograde (backward) to Neptune\'s rotation, suggesting it was likely a dwarf planet captured from the Kuiper Belt. Triton is one of the coldest objects in the solar system (-235°C), yet it surprisingly features an active surface with geysers erupting sublimated nitrogen. While fascinating, it lacks the accessible liquid water oceans that make the moons of Jupiter and Saturn prime candidates for habitability. Triton's retrograde orbit and its remarkable similarity to Pluto in size, density, and surface composition strongly support the capture hypothesis—Neptune's gravity likely seized Triton from a passing Kuiper Belt orbit, and the resulting tidal interactions circularized its initially chaotic trajectory over millions of years. This capture event likely destroyed any original regular satellite system Neptune may have possessed, explaining why the planet's remaining moons are small and scattered. Despite surface temperatures of -235°C, Triton's nitrogen geysers—observed erupting material 8 kilometers into its thin atmosphere—indicate subsurface thermal processes that could potentially maintain pockets of liquid water mixed with ammonia antifreeze at depth. The Neptune system occupies a scientifically critical position as the gateway to the Kuiper Belt, the vast reservoir of icy bodies beyond the planets. Understanding Neptune's formation, migration, and gravitational influence on the Kuiper Belt is essential to unraveling the early history of the solar system, as current models suggest Neptune migrated outward from a much closer original orbit, scattering and reshaping the distribution of comets and dwarf planets in the process.",
         stats: { mass: "1.024 × 10²⁶ kg", diameter: "49,244 km", distance: "30.07 AU", orbitalPeriod: "60,190 days", moons: "16" },
         imagePath: "neptune_premium_1773689193167.png",
-        modelPath: "neptune.glb",
+        modelPath: "Neptune.glb",
         gallery: ["neptune_surface.png", "neptune_angle.png"]
     }
 };
@@ -184,18 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const exploreCards = document.querySelectorAll('.explore-card');
-    exploreCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const planetTarget = this.getAttribute('data-planet');
-            const timelineItem = document.querySelector(`.timeline-item[data-planet="${planetTarget}"]`);
-            if (timelineItem) {
-                timelineItem.click();
-                const target = document.getElementById('explore');
-                if(target) target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
 
     // --- Timeline Interaction ---
     const timelineItems = document.querySelectorAll('.timeline-item');
@@ -253,7 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
                               if (planetModel.parentElement) planetModel.parentElement.style.overflow = 'visible';
                           } else if (planetKey === 'uranus') {
                               planetModel.style.transform = 'scale(1.2) translateY(0%)';
-                              planetModel.setAttribute('orientation', '0deg 0deg 90deg'); // Rotate Z-axis to lay rings horizontally
+                              // Pitch the model 75 degrees (the middle value) to lay the vertical rings 
+                              // down to West-to-East, while keeping left-to-right rotation!
+                              planetModel.setAttribute('orientation', '0deg 75deg 0deg');
                               planetModel.style.width = '100%';
                               planetModel.style.height = '100%';
                               planetModel.style.left = '0';
