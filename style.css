@@ -341,8 +341,8 @@ h2,
 
 .hero-cta.final-hero-btn {
     pointer-events: auto;
-    padding: 1.5rem 8rem; /* Made button longer horizontally */
-    font-size: 2rem;
+    padding: 1rem 4rem; /* Made button slightly smaller horizontally */
+    font-size: 1.5rem;
     letter-spacing: 2px;
     border-radius: 60px;
     width: auto; /* Fit to text */
@@ -378,10 +378,10 @@ h2,
 }
 
 .text-pre-bottom {
-    bottom: 16%;
+    bottom: 22%;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 3.5rem; /* Made the letters bigger */
+    font-size: 2rem; /* Made the letters smaller */
 }
 
 .text-bottom {
@@ -390,6 +390,16 @@ h2,
     transform: translateX(-50%);
 }
 
+.text-continue-below {
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    text-transform: none;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
 .scroll-indicator {
     position: absolute;
     bottom: 30px;

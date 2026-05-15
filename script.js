@@ -296,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 30: document.querySelector('.text-30'),
                 preBtn: document.querySelector('.text-pre-bottom'),
                 btn: document.querySelector('.final-hero-btn'),
+                contBtn: document.querySelector('.text-continue-below')
             };
 
             // Reset opacities
@@ -319,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const fade = Math.min(1, (progress - 0.65) / 0.15);
                 if (texts.preBtn) texts.preBtn.style.opacity = fade;
                 if (texts.btn) texts.btn.style.opacity = fade;
+                if (texts.contBtn) texts.contBtn.style.opacity = fade;
             }
             
             // Fade out scroll indicator quickly
